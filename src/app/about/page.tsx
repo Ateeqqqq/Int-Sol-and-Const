@@ -7,6 +7,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AnimatedDivider from "@/components/AnimatedDivider";
 import MagneticButton from "@/components/MagneticButton";
+import ConversionStrip from "@/components/ConversionStrip";
 import {
   ArrowRight,
   Compass,
@@ -989,6 +990,13 @@ export default function AboutPage() {
             </div>
           </div>
         </section>
+
+        {/* Inline Conversion Strip */}
+        <ConversionStrip
+          badge="STUDIO CONSULTATION · TOLICHOWKI"
+          hook="Planning an interior transformation in Hyderabad? Schedule an in-person review at our studio."
+          subhook="Bring your blueprints or floor plans to our Tolichowki atelier for a 1-on-1 session with our principal architects."
+        />
 
         {/* SECTION DIVIDER: 6 -> 7 */}
         <AnimatedDivider label="Consultation & Inquiries" />

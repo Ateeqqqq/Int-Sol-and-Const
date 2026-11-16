@@ -3,6 +3,9 @@ import { Montserrat, Inter } from "next/font/google";
 import "./globals.css";
 import StructuredData from "@/components/StructuredData";
 import GlobalEffects from "@/components/GlobalEffects";
+import WhatsAppFloater from "@/components/WhatsAppFloater";
+import ConsultationPopup from "@/components/ConsultationPopup";
+import MobileStickyBar from "@/components/MobileStickyBar";
 
 const BRAND_LOGO_URL =
   "https://raw.githubusercontent.com/Ateeqqqq/interior-solutions-ho-/refs/heads/main/interior_solutions_transparent.png";
@@ -119,6 +122,15 @@ export default function RootLayout({
         <GlobalEffects>
           {children}
         </GlobalEffects>
+
+        {/* Global Floating WhatsApp Consultation Widget */}
+        <WhatsAppFloater />
+
+        {/* Timed Private Consultation Popup */}
+        <ConsultationPopup />
+
+        {/* Mobile Sticky Quick Action Bar */}
+        <MobileStickyBar />
       </body>
     </html>
   );

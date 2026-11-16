@@ -12,6 +12,7 @@ import ScrollingGallery from "@/components/ScrollingGallery";
 import Services from "@/components/Services";
 import CostEstimator from "@/components/CostEstimator";
 import ContactForm from "@/components/ContactForm";
+import ConversionStrip from "@/components/ConversionStrip";
 import AnimatedDivider from "@/components/AnimatedDivider";
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle2, ShieldCheck, Trophy, Users, Clock } from "lucide-react";
@@ -21,7 +22,11 @@ const stats = [
   { value: "500+", label: "Homes & Spaces Designed" },
   { value: "12+", label: "Years of Design Leadership" },
   { value: "100%", label: "Turnkey Quality Guarantee" },
-  { value: "45 Days", label: "Average Handover Timeline" },
+  {
+    value: "Depends on Project",
+    label: "Average Handover Timeline",
+    isLong: true,
+  },
 ];
 
 const headingContainerVariants = {
@@ -73,9 +78,15 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.05 }}
                   transition={{ duration: 0.8, delay: idx * 0.1 }}
-                  className="flex flex-col"
+                  className="flex flex-col justify-end"
                 >
-                  <span className="font-heading text-4xl sm:text-6xl font-extrabold text-[#C19B6C] tracking-tight">
+                  <span
+                    className={`font-heading font-extrabold text-[#C19B6C] tracking-tight ${
+                      stat.isLong
+                        ? "text-2xl sm:text-3xl lg:text-4xl leading-[1.1] min-h-[2.5rem] sm:min-h-[3.75rem] flex items-end"
+                        : "text-4xl sm:text-6xl min-h-[2.5rem] sm:min-h-[3.75rem] flex items-end"
+                    }`}
+                  >
                     {stat.value}
                   </span>
                   <span className="mt-2 text-xs uppercase tracking-[0.2em] text-[#1A1A1A] font-mono font-medium">
@@ -154,6 +165,13 @@ export default function HomePage() {
         {/* 4.4. 2D Detailing & Blueprint Section */}
         <BlueprintSection />
 
+        {/* Inline Conversion Strip: Below 2D Blueprint */}
+        <ConversionStrip
+          badge="2D / 3D ARCHITECTURAL BLUEPRINTS"
+          hook="Have a floor plan ready? Get a tailored 2D/3D layout & quote from our principal architects."
+          subhook="Complete spatial planning, false ceiling CAD, electrical layouts, and modular detailing across Hyderabad."
+        />
+
         {/* Animated Drawing Divider: Blueprint -> Transformation */}
         <AnimatedDivider label="Transformation" />
 
@@ -166,17 +184,38 @@ export default function HomePage() {
         {/* 4.6. Process Timeline: From Vision to Sanctuary */}
         <ProcessTimeline />
 
+        {/* Inline Conversion Strip: Below Process Timeline */}
+        <ConversionStrip
+          badge="DELIBERATE TURNKEY JOURNEY"
+          hook="Ready to turn your aspirations into built reality? Book a free site consultation."
+          subhook="From initial discovery to final reveal in Tolichowki, Jubilee Hills, Banjara Hills & HITEC City."
+        />
+
         {/* Animated Drawing Divider: Methodology -> Gallery */}
         <AnimatedDivider label="Curated Gallery" />
 
         {/* 4.7. Auto-Scrolling Portfolio Gallery & Lightbox */}
         <ScrollingGallery />
 
+        {/* Inline Conversion Strip: Below Scrolling Gallery */}
+        <ConversionStrip
+          badge="BESPOKE RESIDENTIAL FINISHES"
+          hook="Inspired by our custom joinery & living spaces? Discuss your floor plan with our designers."
+          subhook="Premium acrylics, Italian marble accents, veneer millwork, and high-efficiency modular kitchens."
+        />
+
         {/* Animated Drawing Divider: Gallery -> Core Spaces */}
         <AnimatedDivider label="Core Spaces" />
 
         {/* 5. Core Services Component (Living, Bedroom, Dining, Kitchen, Accent) */}
         <Services />
+
+        {/* Inline Conversion Strip: Below Core Living Spaces */}
+        <ConversionStrip
+          badge="HYDERABAD INTERIOR EXPERTISE"
+          hook="Transform your apartment, villa, or boutique office with our turnkey delivery team."
+          subhook="Full 3D visualization, transparent billing, and dedicated architectural site supervision."
+        />
 
         {/* Animated Drawing Divider: Services -> Estimator */}
         <AnimatedDivider label="Instant Estimate" />

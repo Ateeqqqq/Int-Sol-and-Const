@@ -8,10 +8,10 @@ import { ChevronsLeftRight, Sparkles, ArrowUpRight } from "lucide-react";
 import MagneticWrapper from "@/components/MagneticWrapper";
 
 const BEFORE_IMAGE_URL =
-  "https://raw.githubusercontent.com/Ateeqqqq/interior-solutions-ho-/refs/heads/main/Unfinished%20Living%20Room%20with%20Balcony%20Views.jpg";
+  "https://raw.githubusercontent.com/Ateeqqqq/interior-solutions-ho-/refs/heads/main/TV%20Wall%20Unit%20Elevation%20Blueprint.png";
 
 const AFTER_IMAGE_URL =
-  "https://raw.githubusercontent.com/Ateeqqqq/interior-solutions-ho-/refs/heads/main/Warm%20Modern%20Luxury%20Living%20Room.jpg";
+  "https://raw.githubusercontent.com/Ateeqqqq/interior-solutions-ho-/refs/heads/main/Modern%20Living%20Room%20TV%20Wall%20with%20Fireworks%20Display.png";
 
 export default function BeforeAfterSlider() {
   const [sliderPosition, setSliderPosition] = useState<number>(50);
@@ -83,7 +83,7 @@ export default function BeforeAfterSlider() {
           <div className="absolute inset-0 w-full h-full">
             <Image
               src={AFTER_IMAGE_URL}
-              alt="After: Warm Modern Luxury Living Room Completed by Interior Solutions"
+              alt="After: Modern Living Room TV Wall Completed by Interior Solutions"
               fill
               priority
               sizes="(max-width: 1280px) 100vw, 1280px"
@@ -102,14 +102,14 @@ export default function BeforeAfterSlider() {
           >
             <Image
               src={BEFORE_IMAGE_URL}
-              alt="Before: Unfinished Living Room with Balcony Views prior to Interior Solutions Execution"
+              alt="Before: TV Wall Unit Elevation Blueprint"
               fill
               priority
               sizes="(max-width: 1280px) 100vw, 1280px"
               className="object-cover object-center pointer-events-none"
             />
-            {/* Subtle dark tint over raw construction to highlight contrast */}
-            <div className="absolute inset-0 bg-black/15 pointer-events-none" />
+            {/* Subtle dark tint over blueprint to highlight contrast */}
+            <div className="absolute inset-0 bg-black/10 pointer-events-none" />
           </div>
 
           {/* 3. CONTEXTUAL PILL BADGES */}
@@ -118,7 +118,7 @@ export default function BeforeAfterSlider() {
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-white shadow-lg">
               <span className="w-1.5 h-1.5 rounded-full bg-white/70" />
               <span className="text-[10px] font-mono uppercase tracking-[0.25em] font-semibold">
-                Before · Raw Space
+                Before · 2D Blueprint
               </span>
             </div>
           </div>

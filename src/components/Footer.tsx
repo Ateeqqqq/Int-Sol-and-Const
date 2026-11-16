@@ -2,10 +2,28 @@
 
 import React from "react";
 import Link from "next/link";
-import { MapPin, Phone, Mail, Clock, ArrowUpRight, ShieldCheck } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, ArrowUpRight, ShieldCheck, Instagram, Youtube, Facebook } from "lucide-react";
 
 const BRAND_LOGO_URL =
   "https://raw.githubusercontent.com/Ateeqqqq/interior-solutions-ho-/refs/heads/main/interior_solutions_transparent.png";
+
+const socialLinks = [
+  {
+    name: "Instagram",
+    href: "https://www.instagram.com/interiorsolutionshoindia",
+    icon: Instagram,
+  },
+  {
+    name: "YouTube",
+    href: "https://www.youtube.com/@interiorsolutions",
+    icon: Youtube,
+  },
+  {
+    name: "Facebook",
+    href: "https://www.facebook.com/people/Interior-Solutions-H-O/100090914154048/",
+    icon: Facebook,
+  },
+];
 
 const spaces = [
   { name: "Living Spaces", href: "/#services" },
@@ -67,6 +85,25 @@ export default function Footer() {
                 Transforming residential villas, luxury penthouses, and commercial spaces across
                 Hyderabad with turnkey execution, bespoke millwork, and refined spatial elegance.
               </p>
+            </div>
+
+            {/* Official Social Media Channels */}
+            <div className="flex items-center gap-3 pt-1">
+              {socialLinks.map((social) => {
+                const Icon = social.icon;
+                return (
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Follow Interior Solutions on ${social.name}`}
+                    className="w-9 h-9 rounded-full border border-black/10 flex items-center justify-center text-[#1A1A1A] hover:text-[#C19B6C] hover:border-[#C19B6C] hover:bg-[#C19B6C]/5 transition-all duration-300 shadow-sm"
+                  >
+                    <Icon className="w-4 h-4" />
+                  </a>
+                );
+              })}
             </div>
 
             <div className="pt-2 flex items-center gap-2 text-xs font-mono text-[#1A1A1A]">

@@ -3,7 +3,25 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ContactForm from "@/components/ContactForm";
-import { Phone, Mail, MapPin, Clock, ArrowUpRight } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, ArrowUpRight, Instagram, Youtube, Facebook } from "lucide-react";
+
+const socialLinks = [
+  {
+    name: "Instagram",
+    href: "https://www.instagram.com/interiorsolutionshoindia",
+    icon: Instagram,
+  },
+  {
+    name: "YouTube",
+    href: "https://www.youtube.com/@interiorsolutions",
+    icon: Youtube,
+  },
+  {
+    name: "Facebook",
+    href: "https://www.facebook.com/people/Interior-Solutions-H-O/100090914154048/",
+    icon: Facebook,
+  },
+];
 
 export const metadata: Metadata = {
   title: "Contact Us | Premium Interior Designers in Hyderabad | Interior Solutions",
@@ -156,6 +174,32 @@ export default function ContactPage() {
                   <p className="text-xs text-[#1A1A1A]/50">
                     Sunday by prior appointment for on-site design reviews.
                   </p>
+                </div>
+
+                {/* Official Social Media Channels */}
+                <div className="space-y-2.5 pt-2">
+                  <div className="flex items-center gap-2 text-[#C19B6C]">
+                    <span className="text-[11px] font-mono uppercase tracking-[0.22em] text-[#1A1A1A]/60 font-medium">
+                      Official Social Channels
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    {socialLinks.map((social) => {
+                      const Icon = social.icon;
+                      return (
+                        <a
+                          key={social.name}
+                          href={social.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Follow Interior Solutions on ${social.name}`}
+                          className="w-10 h-10 rounded-full border border-black/10 flex items-center justify-center text-[#1A1A1A] hover:text-[#C19B6C] hover:border-[#C19B6C] hover:bg-[#C19B6C]/5 transition-all duration-300 shadow-sm"
+                        >
+                          <Icon className="w-4 h-4" />
+                        </a>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
 

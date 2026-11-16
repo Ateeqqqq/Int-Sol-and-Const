@@ -13,6 +13,9 @@ import {
   MapPin,
   Phone,
   RefreshCw,
+  Instagram,
+  Youtube,
+  Facebook,
 } from "lucide-react";
 import { contactFormSchema, type ContactFormData } from "@/lib/validations/contact";
 import { submitLead, type SubmitLeadResponse } from "@/actions/submitLead";
@@ -467,6 +470,46 @@ export default function ContactForm({
                   <p className="text-sm text-[#1A1A1A]/80 mt-0.5">
                     Monday – Saturday: 09:30 AM – 07:30 PM (IST)
                   </p>
+                </div>
+              </div>
+
+              {/* Official Social Media Channels */}
+              <div className="pt-2">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#1A1A1A]/40 block mb-2.5">
+                  Official Channels
+                </span>
+                <div className="flex items-center gap-3">
+                  {[
+                    {
+                      name: "Instagram",
+                      href: "https://www.instagram.com/interiorsolutionshoindia",
+                      icon: Instagram,
+                    },
+                    {
+                      name: "YouTube",
+                      href: "https://www.youtube.com/@interiorsolutions",
+                      icon: Youtube,
+                    },
+                    {
+                      name: "Facebook",
+                      href: "https://www.facebook.com/people/Interior-Solutions-H-O/100090914154048/",
+                      icon: Facebook,
+                    },
+                  ].map((social) => {
+                    const Icon = social.icon;
+                    return (
+                      <a
+                        key={social.name}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Follow Interior Solutions on ${social.name}`}
+                        className="w-10 h-10 rounded-full border border-black/10 flex items-center justify-center text-[#1A1A1A] hover:text-[#C19B6C] hover:border-[#C19B6C] hover:bg-[#C19B6C]/5 transition-all duration-300 shadow-sm"
+                      >
+                        <Icon className="w-4 h-4" />
+                      </a>
+                    );
+                  })}
                 </div>
               </div>
             </div>

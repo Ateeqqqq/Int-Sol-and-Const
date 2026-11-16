@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, ArrowRight, Menu, X, Sparkles } from "lucide-react";
+import { ChevronDown, ArrowRight, Menu, X, Sparkles, Phone } from "lucide-react";
 import MagneticWrapper from "@/components/MagneticWrapper";
 
 const BRAND_LOGO_URL =
@@ -247,16 +247,30 @@ export default function Header() {
         </nav>
 
         {/* ====================================================================
-            RIGHT ACTION: Inquire Button with Warm Gold Accent
+            RIGHT ACTION: Clickable Phone & High-Contrast Solid Gold Inquire CTA
             ==================================================================== */}
-        <div className="hidden lg:flex items-center gap-4">
+        <div className="hidden lg:flex items-center gap-5 xl:gap-6">
+          {/* Direct Clickable Phone Button */}
+          <a
+            href="tel:+919100707409"
+            className="group inline-flex items-center gap-2 text-xs font-mono text-white/90 hover:text-[#C19B6C] transition-colors py-1"
+            aria-label="Call Interior Solutions Studio"
+          >
+            <div className="w-7 h-7 rounded-full bg-white/10 border border-white/20 group-hover:border-[#C19B6C] group-hover:bg-[#C19B6C]/10 flex items-center justify-center transition-all">
+              <Phone className="w-3.5 h-3.5 text-[#C19B6C]" />
+            </div>
+            <span className="font-semibold tracking-wider font-sans text-xs">
+              +91 91007 07409
+            </span>
+          </a>
+
+          {/* Solid Warm Gold Inquire CTA */}
           <MagneticWrapper strength={0.25}>
             <Link
               href="/contact"
-              className="group relative inline-flex items-center justify-center px-5 py-2 bg-black/40 backdrop-blur-sm text-white text-[11px] font-heading font-bold uppercase tracking-[0.22em] group-hover:tracking-[0.26em] transition-all duration-300 hover:shadow-[0_0_24px_rgba(193,155,108,0.4)] border border-white/25 hover:border-[#C19B6C]"
+              className="inline-flex items-center justify-center bg-[#C19B6C] text-[#1A1A1A] font-heading font-bold px-6 py-2.5 text-xs uppercase tracking-[0.2em] hover:bg-white transition-all shadow-[0_4px_20px_rgba(193,155,108,0.3)] hover:shadow-[0_6px_25px_rgba(255,255,255,0.4)] active:scale-95"
             >
-              <span>Inquire</span>
-              <span className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-[#C19B6C] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center" />
+              <span>INQUIRE</span>
             </Link>
           </MagneticWrapper>
         </div>

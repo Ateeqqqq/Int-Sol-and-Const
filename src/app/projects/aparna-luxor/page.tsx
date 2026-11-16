@@ -6,6 +6,7 @@ import Link from "next/link";
 import { X, ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ProjectCtaBanner from "@/components/ProjectCtaBanner";
 
 const galleryImages = [
   "https://www.interiorsolutionsho.com/wp-content/uploads/2026/05/gallery-15-1-scaled.jpg",
@@ -262,6 +263,9 @@ export default function AparnaLuxorPage() {
             </div>
           </div>
         )}
+
+        {/* Bottom Turnkey Call to Action Banner */}
+        <ProjectCtaBanner projectName="Aparna Luxor" />
       </main>
 
       {/* Global Footer */}

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowLeft, Sparkles } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ProjectCtaBanner from "@/components/ProjectCtaBanner";
 
 export const metadata: Metadata = {
   title: "Villa | Recent Projects | Interior Solutions",
@@ -57,6 +58,9 @@ export default function VillaPage() {
             </p>
           </div>
         </section>
+
+        {/* Bottom Turnkey Call to Action Banner */}
+        <ProjectCtaBanner projectName="Villa Portfolio" />
       </main>
 
       {/* Global Footer */}
