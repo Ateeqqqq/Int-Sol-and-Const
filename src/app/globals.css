@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Core Design System Tokens: Pure White Gallery Canvas */
+  --background: #FFFFFF;        /* Pure White Dominant Background Everywhere */
+  --foreground: #1A1A1A;        /* Deep Black Typography & Sharp Contrast */
+  --card: #FFFFFF;              /* Pure White Elevated Surface */
+  --card-foreground: #1A1A1A;
+  --surface-subtle: #FAFAFA;    /* Whisper Neutral for Gallery Planes */
+
+  /* Primary Accent: Warm Gold strictly for hover states, underlines & active items */
+  --primary-accent: #C19B6C;    /* Warm Architectural Gold */
+  --primary-accent-hover: #D4AF7A;
+  --primary-accent-muted: rgba(193, 155, 108, 0.12);
+
+  /* Subtle Gallery Line Work */
+  --border-subtle: rgba(26, 26, 26, 0.08);
+  --border-accent: rgba(193, 155, 108, 0.45);
+}
+
+@layer base {
+  * {
+    border-color: var(--border-subtle);
+  }
+
+  html {
+    background-color: var(--background);
+    color: var(--foreground);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-inter), sans-serif;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  /* Full-width editorial structure: ensure sections default to edge-to-edge */
+  main, section {
+    width: 100%;
+    max-width: none;
+    background-color: var(--background);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-montserrat), sans-serif;
+    letter-spacing: -0.025em;
+    color: var(--foreground);
+  }
+
+  /* Sharp Editorial Text Selection */
+  ::selection {
+    background-color: var(--primary-accent);
+    color: #FFFFFF;
+  }
+}
+
+@layer utilities {
+  /* Interactive Gold Accent Utilities */
+  .text-accent-gold {
+    color: var(--primary-accent);
+  }
+
+  .bg-accent-gold {
+    background-color: var(--primary-accent);
+  }
+
+  .border-accent-gold {
+    border-color: var(--primary-accent);
+  }
+
+  /* Smooth Gold Underline Hover Transition */
+  .gold-underline-hover {
+    position: relative;
+  }
+
+  .gold-underline-hover::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .gold-underline-hover:hover::after,
+  .gold-underline-hover.active::after {
+    transform: scaleX(1);
+  }
+}
+
+/* Minimalist Editorial Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FFFFFF;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E5E5E5;
+  border-radius: 9999px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-accent);
+}
+
+/* Infinite Marquee Animation for ScrollingGallery */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 55s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+
