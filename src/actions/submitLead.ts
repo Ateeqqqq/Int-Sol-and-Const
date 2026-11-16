@@ -36,15 +36,40 @@ export async function submitLead(formData: ContactFormData): Promise<SubmitLeadR
     // 3. Generate architectural dossier reference ID
     const referenceId = `IS-HYD-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
 
-    console.log("[Concierge Server Action] New Lead Received:", {
+    const webhookPayload = {
       referenceId,
-      fullName: leadData.fullName,
+      timestamp: new Date().toISOString(),
+      source: "Contact Form / Concierge Intake",
+      name: leadData.fullName,
       phone: leadData.phoneNumber,
       email: leadData.email,
-      projectType: leadData.projectType,
-      receivedAt: new Date().toISOString(),
-      location: "Hyderabad / Tolichowki Studio",
-    });
+      location: "Hyderabad",
+      propertyType: leadData.projectType,
+      estimate: "Custom Scope",
+      message: leadData.projectDetails || "No message provided",
+    };
+
+    const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
+
+    if (webhookUrl && webhookUrl.trim() !== "") {
+      try {
+        await fetch(webhookUrl.trim(), {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(webhookPayload),
+          redirect: "follow",
+        });
+      } catch (webhookError) {
+        console.error("[submitLead Action] Webhook dispatch warning:", webhookError);
+      }
+    } else {
+      console.warn(
+        "[submitLead Action Warning]: GOOGLE_SHEETS_WEBHOOK_URL is not set. Lead logged locally:",
+        webhookPayload
+      );
+    }
 
     return {
       success: true,

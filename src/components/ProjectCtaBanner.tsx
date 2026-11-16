@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { ArrowRight, CheckCircle2, PhoneCall, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle2, PhoneCall, Sparkles, Loader2 } from "lucide-react";
+import { submitLeadClient } from "@/lib/submitLead";
 
 interface ProjectCtaBannerProps {
   projectName?: string;
@@ -10,13 +11,27 @@ interface ProjectCtaBannerProps {
 export default function ProjectCtaBanner({ projectName }: ProjectCtaBannerProps) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !phone.trim()) return;
 
-    setIsSubmitted(true);
+    setIsSubmitting(true);
+    try {
+      await submitLeadClient({
+        source: `Project Showcase - ${projectName || "Recent Portfolio"}`,
+        name: name.trim(),
+        phone: phone.trim(),
+        message: `Callback requested for turnkey interiors similar to ${projectName || "featured projects"}.`,
+      });
+    } catch (err) {
+      console.error("[ProjectCtaBanner] Submit error:", err);
+    } finally {
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+    }
   };
 
   return (
@@ -61,29 +76,41 @@ export default function ProjectCtaBanner({ projectName }: ProjectCtaBannerProps)
               <input
                 type="text"
                 required
+                disabled={isSubmitting}
                 placeholder="Your Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="bg-transparent text-white placeholder-white/40 px-5 py-3.5 text-xs sm:text-sm outline-none w-full sm:w-1/2 border-b sm:border-b-0 sm:border-r border-white/10 focus:placeholder-white/20 font-sans"
+                className="bg-transparent text-white placeholder-white/40 px-5 py-3.5 text-xs sm:text-sm outline-none w-full sm:w-1/2 border-b sm:border-b-0 sm:border-r border-white/10 focus:placeholder-white/20 font-sans disabled:opacity-60"
               />
 
               {/* Field 2: Phone Number */}
               <input
                 type="tel"
                 required
+                disabled={isSubmitting}
                 placeholder="Phone Number / WhatsApp"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="bg-transparent text-white placeholder-white/40 px-5 py-3.5 text-xs sm:text-sm outline-none w-full sm:w-1/2 focus:placeholder-white/20 font-sans"
+                className="bg-transparent text-white placeholder-white/40 px-5 py-3.5 text-xs sm:text-sm outline-none w-full sm:w-1/2 focus:placeholder-white/20 font-sans disabled:opacity-60"
               />
 
               {/* Field 3: Gold Action Button */}
               <button
                 type="submit"
-                className="inline-flex items-center justify-center gap-2 bg-[#C19B6C] text-[#1A1A1A] font-heading font-bold uppercase tracking-[0.16em] text-xs px-7 py-3.5 rounded-xl sm:rounded-full hover:bg-white hover:text-[#1A1A1A] transition-all duration-300 shadow-md shrink-0 cursor-pointer active:scale-95"
+                disabled={isSubmitting}
+                className="inline-flex items-center justify-center gap-2 bg-[#C19B6C] text-[#1A1A1A] font-heading font-bold uppercase tracking-[0.16em] text-xs px-7 py-3.5 rounded-xl sm:rounded-full hover:bg-white hover:text-[#1A1A1A] transition-all duration-300 shadow-md shrink-0 cursor-pointer active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                <span>Request Callback</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    <span>Sending...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Request Callback</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </>
+                )}
               </button>
             </form>
           )}

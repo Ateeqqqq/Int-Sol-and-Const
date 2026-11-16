@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { X, CheckCircle2, Sparkles, Send } from "lucide-react";
+import { X, CheckCircle2, Sparkles, Send, Loader2 } from "lucide-react";
+import { submitLeadClient } from "@/lib/submitLead";
 
 export default function ConsultationPopup() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
@@ -60,21 +62,32 @@ export default function ConsultationPopup() {
     };
   }, [isOpen, handleClose]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitted(true);
+    setIsSubmitting(true);
 
     try {
       sessionStorage.setItem("hasSeenPopup", "true");
-    } catch {
-      // Ignore storage errors
-    }
+      await submitLeadClient({
+        source: "15s Consultation Popup",
+        name: formData.fullName,
+        phone: formData.phone,
+        propertyType: formData.propertyType,
+        location: formData.location || "Hyderabad",
+        message: `Property Type: ${formData.propertyType}. Location: ${formData.location || "Not specified"}.`,
+      });
+    } catch (error) {
+      console.error("[ConsultationPopup] Submit error:", error);
+    } finally {
+      setIsSubmitting(false);
+      setIsSubmitted(true);
 
-    // Automatically close modal after 2.5 seconds (2500ms)
-    setTimeout(() => {
-      setIsOpen(false);
-      setIsSubmitted(false);
-    }, 2500);
+      // Automatically close modal after 2.5 seconds (2500ms)
+      setTimeout(() => {
+        setIsOpen(false);
+        setIsSubmitted(false);
+      }, 2500);
+    }
   };
 
   if (!isOpen) return null;
@@ -228,14 +241,24 @@ export default function ConsultationPopup() {
                 />
               </div>
 
-              {/* Submit Button */}
+              {/* Submit Button with Loading State */}
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full bg-[#C19B6C] text-white font-heading font-bold uppercase tracking-[0.2em] text-xs py-4 hover:bg-[#1A1A1A] transition-colors rounded-none shadow-md flex items-center justify-center gap-2 group cursor-pointer"
+                  disabled={isSubmitting}
+                  className="w-full bg-[#C19B6C] text-white font-heading font-bold uppercase tracking-[0.2em] text-xs py-4 hover:bg-[#1A1A1A] transition-colors rounded-none shadow-md flex items-center justify-center gap-2 group cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  <span>Request Consultation</span>
-                  <Send className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin text-white" />
+                      <span>Sending Request...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Request Consultation</span>
+                      <Send className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                    </>
+                  )}
                 </button>
               </div>
             </form>

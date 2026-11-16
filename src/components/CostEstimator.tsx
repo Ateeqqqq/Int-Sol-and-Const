@@ -14,7 +14,9 @@ import {
   Building,
   Home,
   CheckCircle2,
+  Loader2,
 } from "lucide-react";
+import { submitLeadClient } from "@/lib/submitLead";
 
 // ============================================================================
 // DATA DEFINITIONS & MULTIPLIERS
@@ -209,6 +211,7 @@ export default function CostEstimator() {
 
   // Hovered room hotspot for floating tooltip
   const [hoveredRoomId, setHoveredRoomId] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Toggle individual room package
   const toggleRoom = (roomId: string) => {
@@ -286,6 +289,34 @@ I would like to lock this estimate and discuss floor plan execution with your pr
 
     return `https://wa.me/919100707409?text=${encodeURIComponent(message)}`;
   }, [activeRooms, scope, selectedFinish, selectedProperty, lowLakhs, highLakhs]);
+
+  const handleLockEstimate = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      const includedRooms = ROOM_ZONES.filter((r) => activeRooms[r.id])
+        .map((r) => r.title)
+        .join(", ");
+      const scopeName =
+        scope === "design_only"
+          ? "2D CAD + 3D Renders Only (Design Consultancy)"
+          : `Turnkey Execution [${selectedFinish.name}]`;
+
+      await submitLeadClient({
+        source: "Spatial Cost Estimator",
+        name: "Website Visitor (Estimator)",
+        phone: "WhatsApp Handover",
+        propertyType: selectedProperty.label,
+        estimate: `₹${lowLakhs} – ₹${highLakhs} Lakhs`,
+        message: `Scope: ${scopeName}. Selected Zones: ${includedRooms || "None"}.`,
+      });
+    } catch (err) {
+      console.error("[CostEstimator] Lead dispatch error:", err);
+    } finally {
+      setIsSubmitting(false);
+      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+    }
+  };
 
   const handleScrollToContact = () => {
     const contactElem = document.getElementById("contact");
@@ -709,15 +740,24 @@ I would like to lock this estimate and discuss floor plan execution with your pr
                 {/* Action Buttons */}
                 <div className="space-y-2.5 pt-2">
                   {/* Primary WhatsApp Action */}
-                  <a
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full inline-flex items-center justify-center gap-2.5 bg-[#C19B6C] hover:bg-[#D4AF7A] text-[#1A1A1A] font-heading font-bold uppercase tracking-[0.16em] text-xs py-4 px-6 rounded-xl transition-all duration-300 shadow-lg active:scale-95 text-center"
+                  <button
+                    type="button"
+                    onClick={handleLockEstimate}
+                    disabled={isSubmitting}
+                    className="w-full inline-flex items-center justify-center gap-2.5 bg-[#C19B6C] hover:bg-[#D4AF7A] disabled:opacity-75 text-[#1A1A1A] font-heading font-bold uppercase tracking-[0.16em] text-xs py-4 px-6 rounded-xl transition-all duration-300 shadow-lg active:scale-95 text-center cursor-pointer"
                   >
-                    <MessageCircle className="w-4 h-4 text-[#1A1A1A] shrink-0" />
-                    <span>Lock Estimate & Send Floor Plan on WhatsApp →</span>
-                  </a>
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 text-[#1A1A1A] animate-spin shrink-0" />
+                        <span>Locking Estimate...</span>
+                      </>
+                    ) : (
+                      <>
+                        <MessageCircle className="w-4 h-4 text-[#1A1A1A] shrink-0" />
+                        <span>Lock Estimate & Send Floor Plan on WhatsApp →</span>
+                      </>
+                    )}
+                  </button>
 
                   {/* Secondary Floor Plan Upload Button */}
                   <button
